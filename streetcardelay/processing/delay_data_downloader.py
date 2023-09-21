@@ -1,10 +1,13 @@
+import logging
 from multiprocessing import Pool
 from typing import Dict, Tuple, Union
 
 import pandas as pd
 import requests
 
-from streetcardelay.geocode import geocode_all_locations
+from streetcardelay.processing.geocode import geocode_all_locations
+
+logger = logging.getLogger(__name__)
 
 
 class DelayDataDownloader:
@@ -57,9 +60,9 @@ class DelayDataDownloader:
         geocoded_locations: Union[Dict[str, Tuple[float, float]], None] = None,
     ) -> pd.DataFrame:
         if geocoded_locations is None:
-            geocoded_locations = geocode_all_locations(
-                delay_data.Location.str.upper().unique()
-            )
+            unique_locations = delay_data.Location.str.upper().unique()
+            logger.info("Geocoding %s location descriptions", len(unique_locations))
+            geocoded_locations = geocode_all_locations(unique_locations)
 
         coordinates = delay_data.Location.str.upper().apply(
             lambda location: geocoded_locations.get(location)
