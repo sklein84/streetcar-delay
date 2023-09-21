@@ -68,4 +68,4 @@ class DelayDataDownloader:
             lambda location: geocoded_locations.get(location)
         )
 
-        return delay_data.assign(location_coordinates=coordinates)
+        return delay_data.assign(coordinates=coordinates)
