@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 class DataKraken:
     delay_data: Union[pd.DataFrame, None]
-    stops_directory: Path
     stops: Union[Dict[str, Dict[str, List]], None]
 
     expected_source_columns = {
@@ -32,9 +31,8 @@ class DataKraken:
     }
     float_tuple_regexp = re.compile(r"\((-?\d+\.\d+), (-?\d+\.\d+)\)")
 
-    def __init__(self, stops_directory: Path) -> None:
+    def __init__(self) -> None:
         self.delay_data = None
-        self.stops_directory = stops_directory
         self.stops = None
 
     def download_delay_data(self):
@@ -101,9 +99,9 @@ class DataKraken:
             return None
         return float(match[1]), float(match[2])
 
-    def read_stops_data(self, glob="*_stops*.csv"):
+    def read_stops_data(self, stops_directory: Path, glob="*_stops*.csv"):
         stops_coordinates = {}
-        for fp in sorted(self.stops_directory.glob(glob)):
+        for fp in sorted(stops_directory.glob(glob)):
             stops = pd.read_csv(fp, sep="|")
             stops.coordinates = stops.coordinates.apply(self._tuple_parser)
             streetcar_line_match = re.match(r"\d{3}", str(fp.stem))
