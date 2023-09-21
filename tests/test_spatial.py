@@ -1,4 +1,4 @@
-from streetcardelay.spatial import find_closest_stop_pair
+from streetcardelay.processing.spatial import find_closest_stop_pair
 
 
 def test_find_closest_stop_pair():
