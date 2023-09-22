@@ -3,8 +3,7 @@ from typing import List, Tuple
 
 
 def haversine(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
-    """
-    Calculate the great circle distance in kilometers between two points
+    """Calculate the great circle distance in kilometers between two points
     on the earth (specified in decimal degrees). See https://stackoverflow.com/a/4913653
     """
     # convert decimal degrees to radians
@@ -22,8 +21,7 @@ def haversine(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
 def find_closest_stop_pair(
     streetcar_stops: List[Tuple[float, float]], delay_point: Tuple[float, float]
 ) -> int:
-    """
-    Finds the closest two adjacent points in a list of coordinates to a reference point and returns
+    """Finds the closest two adjacent points in a list of coordinates to a reference point and returns
     the index of the first point in the list of adjacents
     """
     if len(streetcar_stops) < 2:

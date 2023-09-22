@@ -3,6 +3,7 @@ from typing import List
 from fastapi import FastAPI
 
 from streetcardelay import config
+from streetcardelay.api.model import StreetCarDelay, StreetCarDelayAggregate
 from streetcardelay.processing import DataKraken
 
 
@@ -34,10 +35,28 @@ async def streetcar_stops(line: str) -> List[str]:
     return STREETCAR_STOPS[line]["stops"]
 
 
-@app.get("/streetcarDelays/{line}")
-async def streetcar_delays(line) -> List[dict]:
+@app.get("/streetcarDelays/{line}", response_model_by_alias=False)
+async def streetcar_delays(line) -> List[StreetCarDelay]:
     return (
         DELAY_DATA[DELAY_DATA.Line == line]
         .replace(float("nan"), None)
         .to_dict("records")
     )
+
+
+@app.get("/streetcarDelays/{line}/aggregate", response_model_by_alias=False)
+async def streetcar_delay_aggregate(line) -> List[StreetCarDelayAggregate]:
+    aggregated = (
+        DELAY_DATA[DELAY_DATA.Line == line][
+            ["closest_stop_before", "closest_stop_after", "Min Delay"]
+        ]
+        .groupby(["closest_stop_before", "closest_stop_after"])
+        .agg(["sum", "count"])
+    )
+    aggregated.columns = [
+        "_".join(col).rstrip("_") for col in aggregated.columns.values
+    ]
+
+    aggregated.reset_index(inplace=True)
+
+    return aggregated.to_dict("records")
