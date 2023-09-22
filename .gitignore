@@ -1,5 +1,44 @@
+#Python
+
 venv
 *.egg-info
 *__pycache__
 data_archive
 exploration*
+
+# Compiled output
+/delayDashboard/dist
+/delayDashboard/tmp
+/delayDashboard/out-tsc
+/delayDashboard/bazel-out
+
+# Node
+/delayDashboard/node_modules
+/delayDashboardnpm-debug.log
+/delayDashboardyarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+.history/*
+
+# Miscellaneous
+/delayDashboard/.angular/cache
+/delayDashboard.sass-cache/
+/delayDashboard/connect.lock
+/delayDashboard/coverage
+/delayDashboard/libpeerconnection.log
+/delayDashboardtestem.log
+/delayDashboard/typings
+
+# System files
+.DS_Store
+Thumbs.db
