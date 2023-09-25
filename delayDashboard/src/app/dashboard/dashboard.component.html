@@ -1,1 +1,45 @@
-<p>dashboard works!</p>
+<h1 style="color: red; text-align: center">TTC Streetcar Delay Explorer</h1>
+
+<div style="margin-bottom: 20px; text-align: right">
+  <div>
+    Line:
+    <select (change)="changeLine($event)">
+      <option *ngFor="let streetcarLine of lines">{{ streetcarLine }}</option>
+    </select>
+    Statistic:
+    <select (change)="changeStat($event)">
+      <option value="Count">Count</option>
+      <option value="Total Minutes">Total Minutes</option>
+    </select>
+  </div>
+  <h3 style="color: red">Filter</h3>
+  <form [formGroup]="filterForm">
+    <div style="margin: 5px">
+      <label>Date range:</label>
+      <input type="date" style="width: 9em" formControlName="dateFrom" />
+      -
+      <input type="date" style="width: 9em" formControlName="dateUntil" />
+    </div>
+    <div style="margin: 5px">
+      <label>Time range:</label>
+      <input type="time" formControlName="timeFrom" />
+      -
+      <input type="time" formControlName="timeUntil" />
+    </div>
+  </form>
+  <button style="margin: 5px" (click)="refreshData()">Apply</button>
+  <button style="margin: 5px" (click)="filterForm.reset()">Reset</button>
+</div>
+
+<div *ngFor="let stop of stops">
+  <div style="display: flex">
+    <div class="dot"></div>
+    <div style="font-weight: bold">{{ stop }}</div>
+  </div>
+  <div style="display: flex">
+    <div class="vert-line"></div>
+    <div [ngStyle]="getBarStyle(stop)">
+      {{ getStat(stop) }} {{ stat === "Count" ? "Delays" : "Minutes" }}
+    </div>
+  </div>
+</div>

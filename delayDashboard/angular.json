@@ -63,7 +63,8 @@
               "browserTarget": "delayDashboard:build:production"
             },
             "development": {
-              "browserTarget": "delayDashboard:build:development"
+              "browserTarget": "delayDashboard:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
