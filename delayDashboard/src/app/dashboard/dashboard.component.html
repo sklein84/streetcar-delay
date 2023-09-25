@@ -31,12 +31,12 @@
   <button style="margin: 5px" (click)="filterForm.reset()">Reset</button>
 </div>
 
-<div *ngFor="let stop of stops">
+<div *ngFor="let stop of stops; index as i">
   <div style="display: flex">
     <div class="dot"></div>
     <div style="font-weight: bold">{{ stop }}</div>
   </div>
-  <div style="display: flex">
+  <div style="display: flex" *ngIf="i < stops.length - 1">
     <div class="vert-line"></div>
     <div [ngStyle]="getBarStyle(stop)">
       {{ getStat(stop) }} {{ stat === "Count" ? "Delays" : "Minutes" }}
