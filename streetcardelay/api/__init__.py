@@ -2,6 +2,7 @@ import datetime
 from typing import List, Union
 
 from fastapi import FastAPI
+import numpy as np
 
 from streetcardelay import config
 from streetcardelay.api.model import StreetCarDelay, StreetCarDelayAggregate
@@ -48,16 +49,16 @@ async def streetcar_delays(line) -> List[StreetCarDelay]:
 @app.get("/streetcarDelays/{line}/aggregate", response_model_by_alias=False)
 async def streetcar_delay_aggregate(
     line,
-    yearFrom: Union[int, None] = None,
-    yearUntil: Union[int, None] = None,
+    dateFrom: Union[datetime.date, None] = None,
+    dateUntil: Union[datetime.date, None] = None,
     timeFrom: Union[datetime.time, None] = None,
     timeUntil: Union[datetime.time, None] = None,
 ) -> List[StreetCarDelayAggregate]:
     filtered_df = DELAY_DATA[DELAY_DATA.Line == line]
-    if yearFrom is not None:
-        filtered_df = filtered_df[filtered_df["Date"] >= yearFrom]
-    if yearUntil is not None:
-        filtered_df = filtered_df[filtered_df["Date"] <= yearUntil]
+    if dateFrom is not None:
+        filtered_df = filtered_df[filtered_df["Date"] >= np.datetime64(dateFrom)]
+    if dateUntil is not None:
+        filtered_df = filtered_df[filtered_df["Date"] <= np.datetime64(dateUntil)]
     if timeFrom is not None:
         filtered_df = filtered_df[filtered_df["Time"] >= timeFrom]
     if timeUntil is not None:

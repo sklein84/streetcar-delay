@@ -51,6 +51,7 @@ class DataKraken:
 
         self.delay_data.astype(dtype=self.expected_source_columns, copy=False)
         self.delay_data["Date"] = pd.to_datetime(self.delay_data["Date"])
+        self.delay_data["Time"] = self.delay_data["Time"].map(datetime.time.fromisoformat)
 
     def add_geocoded_delay_locations_from_file(self, fp: Path):
         if self.delay_data is None:
