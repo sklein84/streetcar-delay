@@ -1,9 +1,11 @@
+import datetime
 import logging
 import re
 from itertools import chain
 from pathlib import Path
 from typing import Dict, List, Tuple, Union
 
+import numpy as np
 import pandas as pd
 
 from streetcardelay.processing.delay_data_downloader import DelayDataDownloader
@@ -18,16 +20,16 @@ class DataKraken:
     stops: Union[Dict[str, Dict[str, List]], None]
 
     expected_source_columns = {
-        "Date",
-        "Line",
-        "Time",
-        "Day",
-        "Location",
-        "Incident",
-        "Min Delay",
-        "Min Gap",
-        "Bound",
-        "Vehicle",
+        "Date": str,
+        "Line": str,
+        "Time": str,
+        "Day": str,
+        "Location": str,
+        "Incident": str,
+        "Min Delay": np.float64,
+        "Min Gap": np.float64,
+        "Bound": str,
+        "Vehicle": str,
     }
     float_tuple_regexp = re.compile(r"\((-?\d+\.\d+), (-?\d+\.\d+)\)")
 
@@ -41,11 +43,14 @@ class DataKraken:
     def read_delay_data(self, fp: Path):
         self.delay_data = pd.read_csv(fp, sep="|")
 
-        if not self.expected_source_columns <= set(self.delay_data.columns):
+        if not set(self.expected_source_columns) <= set(self.delay_data.columns):
             logger.warn(
                 "Missing columns in provided data: %s",
-                self.expected_source_columns - set(self.delay_data.columns),
+                set(self.expected_source_columns) - set(self.delay_data.columns),
             )
+
+        self.delay_data.astype(dtype=self.expected_source_columns, copy=False)
+        self.delay_data["Date"] = pd.to_datetime(self.delay_data["Date"])
 
     def add_geocoded_delay_locations_from_file(self, fp: Path):
         if self.delay_data is None:

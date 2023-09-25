@@ -48,20 +48,20 @@ async def streetcar_delays(line) -> List[StreetCarDelay]:
 @app.get("/streetcarDelays/{line}/aggregate", response_model_by_alias=False)
 async def streetcar_delay_aggregate(
     line,
-    year_from: Union[int, None] = None,
-    year_until: Union[int, None] = None,
-    time_from: Union[datetime.time, None] = None,
-    time_until: Union[datetime.time, None] = None,
+    yearFrom: Union[int, None] = None,
+    yearUntil: Union[int, None] = None,
+    timeFrom: Union[datetime.time, None] = None,
+    timeUntil: Union[datetime.time, None] = None,
 ) -> List[StreetCarDelayAggregate]:
     filtered_df = DELAY_DATA[DELAY_DATA.Line == line]
-    if year_from is not None:
-        filtered_df = filtered_df[filtered_df["Date"] >= year_from]
-    if year_until is not None:
-        filtered_df = filtered_df[filtered_df["Date"] <= year_until]
-    if time_from is not None:
-        filtered_df = filtered_df[filtered_df["Time"] >= time_from]
-    if time_until is not None:
-        filtered_df = filtered_df[filtered_df["Time"] <= time_until]
+    if yearFrom is not None:
+        filtered_df = filtered_df[filtered_df["Date"] >= yearFrom]
+    if yearUntil is not None:
+        filtered_df = filtered_df[filtered_df["Date"] <= yearUntil]
+    if timeFrom is not None:
+        filtered_df = filtered_df[filtered_df["Time"] >= timeFrom]
+    if timeUntil is not None:
+        filtered_df = filtered_df[filtered_df["Time"] <= timeUntil]
 
     aggregated = (
         filtered_df[["closest_stop_before", "closest_stop_after", "Min Delay"]]
