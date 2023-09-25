@@ -1,4 +1,5 @@
-from typing import List
+import datetime
+from typing import List, Union
 
 from fastapi import FastAPI
 
@@ -45,11 +46,25 @@ async def streetcar_delays(line) -> List[StreetCarDelay]:
 
 
 @app.get("/streetcarDelays/{line}/aggregate", response_model_by_alias=False)
-async def streetcar_delay_aggregate(line) -> List[StreetCarDelayAggregate]:
+async def streetcar_delay_aggregate(
+    line,
+    year_from: Union[int, None] = None,
+    year_until: Union[int, None] = None,
+    time_from: Union[datetime.time, None] = None,
+    time_until: Union[datetime.time, None] = None,
+) -> List[StreetCarDelayAggregate]:
+    filtered_df = DELAY_DATA[DELAY_DATA.Line == line]
+    if year_from is not None:
+        filtered_df = filtered_df[filtered_df["Date"] >= year_from]
+    if year_until is not None:
+        filtered_df = filtered_df[filtered_df["Date"] <= year_until]
+    if time_from is not None:
+        filtered_df = filtered_df[filtered_df["Time"] >= time_from]
+    if time_until is not None:
+        filtered_df = filtered_df[filtered_df["Time"] <= time_until]
+
     aggregated = (
-        DELAY_DATA[DELAY_DATA.Line == line][
-            ["closest_stop_before", "closest_stop_after", "Min Delay"]
-        ]
+        filtered_df[["closest_stop_before", "closest_stop_after", "Min Delay"]]
         .groupby(["closest_stop_before", "closest_stop_after"])
         .agg(["sum", "count"])
     )
