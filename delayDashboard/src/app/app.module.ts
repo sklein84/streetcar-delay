@@ -1,3 +1,5 @@
+import { NgIconsModule } from '@ng-icons/core';
+import { bootstrapXCircleFill } from '@ng-icons/bootstrap-icons';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -8,7 +10,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
-  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgIconsModule.withIcons({ bootstrapXCircleFill }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
