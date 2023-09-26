@@ -5,6 +5,11 @@ export interface IStreetcarDelayAggregate {
   totalDelay: number;
 }
 
+export interface IAggregateStopDetails {
+  closestStopBefore: string;
+  topIncidentTypes: string[];
+}
+
 export interface IDelayFilterParameters {
   dateFrom?: number | null;
   dateUntil?: number | null;

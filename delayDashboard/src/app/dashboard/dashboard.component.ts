@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StopService } from '../stop-service.service';
 import { DelayService } from '../delay-service.service';
-import { IDelayFilterParameters, IStreetcarDelayAggregate } from '../model';
+import { IAggregateStopDetails, IStreetcarDelayAggregate } from '../model';
 import { LineService } from '../line-service.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -15,8 +15,11 @@ export class DashboardComponent implements OnInit {
   public stat: string = 'Count';
   public lines: string[] = [];
   public stops: string[] = [];
+  public selectedStop: string | null = null;
+  public selectedStopData: IAggregateStopDetails | null = null;
   public delayAggregates: IStreetcarDelayAggregate[] = [];
   public barLengths: { closestStopBefore: string; length: number }[] = [];
+  private vizWidth: number = 0;
   filterForm = new FormGroup({
     dateFrom: new FormControl(undefined),
     dateUntil: new FormControl(undefined),
@@ -32,6 +35,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
+    let vizContainer = document.getElementById('vizContainer');
+    this.vizWidth = vizContainer
+      ? vizContainer.getBoundingClientRect().width
+      : 0;
   }
 
   refreshData(): void {
@@ -39,10 +46,13 @@ export class DashboardComponent implements OnInit {
     this.stopService
       .getStops(this.line)
       .subscribe((stops) => (this.stops = stops));
-    this.delayService.getDelayAggregate(this.line, this.filterForm.value).subscribe((delayAggs) => {
-      this.delayAggregates = delayAggs;
-      this.calculateBarLengths();
-    });
+    this.delayService
+      .getDelayAggregate(this.line, this.filterForm.value)
+      .subscribe((delayAggs) => {
+        this.delayAggregates = delayAggs;
+        this.calculateBarLengths();
+      });
+    this.selectedStop = null;
   }
 
   changeLine(event: Event): void {
@@ -104,11 +114,22 @@ export class DashboardComponent implements OnInit {
     const relative_width = match ? match.length : 0;
 
     return {
-      width: `${relative_width * 1000}px`,
+      width: `${relative_width * this.vizWidth}px`,
       background: this.getBarColor(relative_width),
       'line-height': '50px',
       'padding-left': '5px',
       'white-space': 'nowrap',
     };
+  }
+
+  selectStop(stop: string | null) {
+    this.selectedStop = stop;
+    if (stop) {
+      this.delayService
+        .getDelayAggregateDetails(this.line, stop, this.filterForm.value)
+        .subscribe((details) => (this.selectedStopData = details));
+    } else {
+      this.selectedStopData = null;
+    }
   }
 }

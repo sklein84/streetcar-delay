@@ -1,6 +1,6 @@
-<h1 style="color: red; text-align: center">TTC Streetcar Delay Explorer</h1>
+<h1 style="text-align: center">TTC Streetcar Delay Explorer</h1>
 
-<div style="margin-bottom: 20px; text-align: right">
+<div style="margin-bottom: 20px; display: flex; justify-content: space-between">
   <div>
     Line:
     <select (change)="changeLine($event)">
@@ -12,34 +12,65 @@
       <option value="Total Minutes">Total Minutes</option>
     </select>
   </div>
-  <h3 style="color: red">Filter</h3>
   <form [formGroup]="filterForm">
     <div style="margin: 5px">
       <label>Date range:</label>
-      <input type="date" style="width: 9em" formControlName="dateFrom" />
+      <input
+        type="date"
+        style="width: 9em; margin: 5px"
+        formControlName="dateFrom"
+      />
       -
-      <input type="date" style="width: 9em" formControlName="dateUntil" />
+      <input
+        type="date"
+        style="width: 9em; margin: 5px"
+        formControlName="dateUntil"
+      />
     </div>
     <div style="margin: 5px">
       <label>Time range:</label>
-      <input type="time" formControlName="timeFrom" />
+      <input style="margin: 5px" type="time" formControlName="timeFrom" />
       -
-      <input type="time" formControlName="timeUntil" />
+      <input style="margin: 5px" type="time" formControlName="timeUntil" />
+    </div>
+    <div style="margin: 5px">
+      <button style="margin: 5px" (click)="refreshData()">Apply Filter</button>
+      <button style="margin: 5px" (click)="filterForm.reset()">Reset</button>
     </div>
   </form>
-  <button style="margin: 5px" (click)="refreshData()">Apply</button>
-  <button style="margin: 5px" (click)="filterForm.reset()">Reset</button>
 </div>
 
-<div *ngFor="let stop of stops; index as i">
-  <div style="display: flex">
-    <div class="dot"></div>
-    <div style="font-weight: bold">{{ stop }}</div>
-  </div>
-  <div style="display: flex" *ngIf="i < stops.length - 1">
-    <div class="vert-line"></div>
-    <div [ngStyle]="getBarStyle(stop)">
-      {{ getStat(stop) }} {{ stat === "Count" ? "Delays" : "Minutes" }}
+<div>
+  <div id="vizContainer" width="60%">
+    <div *ngFor="let stop of stops; index as i">
+      <div style="display: flex">
+        <div class="dot"></div>
+        <div style="font-weight: bold">{{ stop }}</div>
+      </div>
+      <div style="display: flex" *ngIf="i < stops.length - 1">
+        <div class="vert-line"></div>
+        <div [ngStyle]="getBarStyle(stop)" (click)="selectStop(stop)">
+          {{ getStat(stop) }} {{ stat === "Count" ? "Delays" : "Minutes" }}
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="details-float" *ngIf="selectedStop">
+    <div style="display: flex">
+      <h3 style="margin-top: 0; margin-right: 2px">
+        {{ selectedStop }} - {{ stops[stops.indexOf(selectedStop) + 1] }}
+      </h3>
+      <ng-icon
+        name="bootstrapXCircleFill"
+        color="rgb(210, 0, 0)"
+        (click)="selectedStop = null"
+      ></ng-icon>
+    </div>
+    Top Incidents Types:
+    <ol>
+      <li *ngFor="let incident of selectedStopData?.topIncidentTypes">
+        {{ incident }}
+      </li>
+    </ol>
   </div>
 </div>
