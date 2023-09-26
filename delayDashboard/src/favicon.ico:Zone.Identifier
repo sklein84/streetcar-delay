@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://cloudconvert.com/
+HostUrl=https://eu-central.storage.cloudconvert.com/tasks/1988fc61-f645-44d9-b49c-1c706d6ed929/hourglass-split.ico?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cloudconvert-production%2F20230926%2Ffra%2Fs3%2Faws4_request&X-Amz-Date=20230926T172008Z&X-Amz-Expires=86400&X-Amz-Signature=72a6561af2faa8e16eab02328e296f7663213663dd35802ba2691ad049fd5a7c&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22hourglass-split.ico%22&response-content-type=image%2Fx-icon&x-id=GetObject
