@@ -1,5 +1,5 @@
 import datetime
-from typing import Union
+from typing import List, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -23,3 +23,8 @@ class StreetCarDelayAggregate(BaseModel):
     closestStopAfter: Union[str, None] = Field(alias="closest_stop_after")
     totalCount: int = Field(alias="Min Delay_count")
     totalDelay: float = Field(alias="Min Delay_sum")
+
+
+class AggregateDetails(BaseModel):
+    closestStopBefore: str
+    topIncidentTypes: List[str]
