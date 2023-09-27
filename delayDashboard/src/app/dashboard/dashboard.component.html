@@ -10,6 +10,7 @@
     <select (change)="changeStat($event)">
       <option value="Count">Count</option>
       <option value="Total Minutes">Total Minutes</option>
+      <option value="Minutes / Incident">Minutes / Incident</option>
     </select>
   </div>
   <form [formGroup]="filterForm">
@@ -35,7 +36,9 @@
     </div>
     <div style="margin: 5px">
       <button style="margin: 5px" (click)="refreshData()">Apply Filter</button>
-      <button style="margin: 5px" (click)="filterForm.reset()">Reset</button>
+      <button style="margin: 5px" (click)="filterForm.reset(); refreshData()">
+        Reset
+      </button>
     </div>
   </form>
 </div>

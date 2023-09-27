@@ -70,8 +70,10 @@ export class DashboardComponent implements OnInit {
       ...this.delayAggregates.map((aggregate) => {
         if (this.stat == 'Total Minutes') {
           return aggregate.totalDelay;
-        } else {
+        } else if (this.stat == 'Count') {
           return aggregate.totalCount;
+        } else {
+          return aggregate.totalDelay / aggregate.totalCount;
         }
       })
     );
@@ -82,10 +84,16 @@ export class DashboardComponent implements OnInit {
           closestStopBefore: aggregate.closestStopBefore,
           length: aggregate.totalDelay / max_absolute_length,
         };
-      } else {
+      } else if (this.stat == 'Count') {
         return {
           closestStopBefore: aggregate.closestStopBefore,
           length: aggregate.totalCount / max_absolute_length,
+        };
+      } else {
+        return {
+          closestStopBefore: aggregate.closestStopBefore,
+          length:
+            aggregate.totalDelay / aggregate.totalCount / max_absolute_length,
         };
       }
     });
@@ -98,7 +106,13 @@ export class DashboardComponent implements OnInit {
     if (!match) {
       return 0;
     }
-    return this.stat === 'Total Minutes' ? match.totalDelay : match.totalCount;
+    if (this.stat == 'Total Minutes') {
+      return match.totalDelay;
+    } else if (this.stat == 'Count') {
+      return match.totalCount;
+    } else {
+      return +(match.totalDelay / match.totalCount).toFixed(1);
+    }
   }
 
   private getBarColor(ratio: number): string {
