@@ -11,7 +11,7 @@ import {
   providedIn: 'root',
 })
 export class DelayService {
-  private delays_endpoint = '/api/streetcarDelays';
+  private delays_endpoint = './api/streetcarDelays';
 
   constructor(private http: HttpClient) {}
 

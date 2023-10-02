@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class StopService {
-  private stops_endpoint = '/api/streetcarStops';
+  private stops_endpoint = './api/streetcarStops';
 
   constructor(private http: HttpClient) {}
 

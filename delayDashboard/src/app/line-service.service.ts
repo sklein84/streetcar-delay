@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LineService {
 
-  private lines_endpoint = '/api/streetcarLines'
+  private lines_endpoint = './api/streetcarLines'
 
   constructor(private http: HttpClient) { }
 
