@@ -1,4 +1,4 @@
-from math import asin, cos, radians, sin, sqrt
+from math import asin, cos, log, pi, radians, sin, sqrt, tan
 from typing import List, Tuple
 
 
@@ -51,3 +51,8 @@ def find_closest_stop_pair(
         return nearest - 1
     else:
         return nearest
+
+
+def mercator_project(lat: float, lon: float) -> Tuple[float, float]:
+    """Project a lattitude-longitude pair using the Mercator projection"""
+    return radians(lon), log(tan((pi / 4) + (radians(lat) / 2)))
