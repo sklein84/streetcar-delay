@@ -75,11 +75,14 @@ class SVGGenerator:
             svg.Circle(
                 cx=coord[0],
                 cy=coord[1],
+                id=f"stop:{name}",
                 r=self.style.stop_radius,
                 fill="red",
                 stroke_width=0,
             )
-            for coord in self._transformed_coordinates
+            for coord, name in zip(
+                self._transformed_coordinates, self._line_info["stops"]
+            )
         ]
 
         lines: List[svg.Element] = [
@@ -88,12 +91,15 @@ class SVGGenerator:
                 y1=start[1],
                 x2=end[0],
                 y2=end[1],
+                id=f"line:{name_before}",
                 stroke=self.style.line_color,
                 stroke_width=self.style.line_width,
                 stroke_linecap="round",
             )
-            for start, end in zip(
-                self._transformed_coordinates, self._transformed_coordinates[1:]
+            for start, end, name_before in zip(
+                self._transformed_coordinates,
+                self._transformed_coordinates[1:],
+                self._line_info["stops"],
             )
         ]
 
