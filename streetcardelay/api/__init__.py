@@ -141,3 +141,9 @@ async def stopAggregateDetails(
             f"{incident} ({count})" for incident, count in top_incidents.items()
         ],
     )
+
+
+@app.get("/help")
+async def help() -> str:
+    with open(config.HELPFILE) as help_file:
+        return help_file.read()

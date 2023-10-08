@@ -15,3 +15,5 @@ DELAY_COORDINATES_FILE = Path(
 STREETCAR_STOPS_DIRECTORY = Path(
     os.environ.get("STREETCAR_STOPS_DIRECTORY", "data/streetcar_stops")
 )
+
+HELPFILE = Path(os.environ.get("STREETCAR_DELAY_HELPFILE", "data/help.md"))
