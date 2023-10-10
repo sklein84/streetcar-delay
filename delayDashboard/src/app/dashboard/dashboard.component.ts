@@ -3,7 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { StopService } from '../stop-service.service';
 import { DelayService } from '../delay-service.service';
 import { LineService } from '../line-service.service';
-import { IAggregateStopDetails, IStreetcarDelayAggregate } from '../model';
+import {
+  IAggregateStopDetails,
+  IMetadata,
+  IStreetcarDelayAggregate,
+} from '../model';
+import { MetadataService } from '../metadata.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +25,7 @@ export class DashboardComponent implements OnInit {
   public lines: string[] = [];
   public stops: string[] = [];
   public helpText: string = '';
+  public metadata: IMetadata | null = null;
 
   public selectedStopData: IAggregateStopDetails | null = null;
   public delayAggregates: IStreetcarDelayAggregate[] = [];
@@ -36,6 +42,7 @@ export class DashboardComponent implements OnInit {
     private stopService: StopService,
     private delayService: DelayService,
     private lineService: LineService,
+    private metadataService: MetadataService,
     private changeRef: ChangeDetectorRef
   ) {}
 
@@ -45,6 +52,7 @@ export class DashboardComponent implements OnInit {
     this.vizWidth = vizContainer
       ? vizContainer.getBoundingClientRect().width
       : 0;
+    this.metadataService.getMetadata().subscribe((md) => (this.metadata = md));
   }
 
   refreshData(): void {
