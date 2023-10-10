@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from streetcardelay import config
 from streetcardelay.api.model import (
     AggregateDetails,
+    MetaData,
     StreetCarDelay,
     StreetCarDelayAggregate,
 )
@@ -30,6 +31,14 @@ def prepare_data():
 STREETCAR_STOPS, DELAY_DATA = prepare_data()
 
 app = FastAPI()
+
+
+@app.get("/metadata")
+async def metadata() -> MetaData:
+    min_date = DELAY_DATA.Date.min()
+    max_date = DELAY_DATA.Date.max()
+
+    return MetaData(earliestDate=min_date, latestDate=max_date)
 
 
 @app.get("/streetcarLines")
