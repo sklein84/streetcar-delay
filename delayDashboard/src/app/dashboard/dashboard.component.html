@@ -1,4 +1,11 @@
-<h1 style="text-align: center">TTC Streetcar Delay Explorer</h1>
+<div style="display: flex; justify-content: center">
+  <h1 style="text-align: center">TTC Streetcar Delay Explorer</h1>
+  <div (click)="showInfoModal()" style="margin-left: 20px; font-size: 16pt; margin-top: 22pt;">
+    <ng-icon name="bootstrapInfoCircleFill" color="rgb(210, 0, 0)"></ng-icon>
+  </div>
+</div>
+
+<info-modal [visible]="infoModalVisible"></info-modal>
 
 <div style="margin-bottom: 20px; display: flex; justify-content: space-between">
   <div>

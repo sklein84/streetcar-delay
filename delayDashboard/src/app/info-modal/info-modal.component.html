@@ -1,0 +1,10 @@
+<div class="info-modal" [style.display]="visible ? 'block' : 'none'">
+  <div style="text-align: right;">
+    <ng-icon
+      name="bootstrapXCircleFill"
+      color="rgb(210, 0, 0)"
+      (click)="visible = false"
+    ></ng-icon>
+  </div>
+  <div [innerHTML]="infoText | markdown"></div>
+</div>

@@ -1,0 +1,22 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--headline-red)
+}
+
+.info-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 10%;
+  top: 10%;
+  width: 80%;
+  height: 80%;
+  overflow: auto;
+  padding: 10px;
+  background-color: var(--background-red);
+  border: 1px solid var(--headline-red);
+}

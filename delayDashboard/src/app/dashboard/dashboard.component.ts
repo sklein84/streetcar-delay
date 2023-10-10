@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { StopService } from '../stop-service.service';
 import { DelayService } from '../delay-service.service';
-import { IAggregateStopDetails, IStreetcarDelayAggregate } from '../model';
 import { LineService } from '../line-service.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { IAggregateStopDetails, IStreetcarDelayAggregate } from '../model';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +11,16 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  public infoModalVisible = false;
+
   public line: string = '301';
   public stat: string = 'Count';
+  public selectedStop: string | null = null;
+
   public lines: string[] = [];
   public stops: string[] = [];
-  public selectedStop: string | null = null;
+  public helpText: string = '';
+
   public selectedStopData: IAggregateStopDetails | null = null;
   public delayAggregates: IStreetcarDelayAggregate[] = [];
   public barLengths: { closestStopBefore: string; length: number }[] = [];
@@ -30,7 +35,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private stopService: StopService,
     private delayService: DelayService,
-    private lineService: LineService
+    private lineService: LineService,
+    private changeRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -145,5 +151,11 @@ export class DashboardComponent implements OnInit {
     } else {
       this.selectedStopData = null;
     }
+  }
+
+  showInfoModal() {
+    this.infoModalVisible = false;
+    this.changeRef.detectChanges();
+    this.infoModalVisible = true;
   }
 }
