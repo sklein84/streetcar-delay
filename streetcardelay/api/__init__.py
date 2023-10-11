@@ -3,7 +3,7 @@ from typing import List, Union
 
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import HTTPException, FastAPI, Response
 
 from streetcardelay import config
 from streetcardelay.api.model import (
@@ -12,6 +12,7 @@ from streetcardelay.api.model import (
     StreetCarDelay,
     StreetCarDelayAggregate,
 )
+from streetcardelay.graphics.svg_generator import SVGGenerator
 from streetcardelay.processing import DataKraken
 
 
@@ -48,6 +49,9 @@ async def streetcar_lines() -> List[str]:
 
 @app.get("/streetcarStops")
 async def streetcar_stops(line: str) -> List[str]:
+    if line not in STREETCAR_STOPS:
+        raise HTTPException(400, detail=f"Streetcar line {line} not found")
+    
     return STREETCAR_STOPS[line]["stops"]
 
 
@@ -149,6 +153,17 @@ async def stopAggregateDetails(
         topIncidentTypes=[
             f"{incident} ({count})" for incident, count in top_incidents.items()
         ],
+    )
+
+
+@app.get("/map", response_class=Response)
+async def svg_map(line: str):
+    if line not in STREETCAR_STOPS:
+        raise HTTPException(400, detail=f"Streetcar line {line} not found")
+
+    generator = SVGGenerator(STREETCAR_STOPS[line])
+    return Response(
+        content=bytes(str(generator.make_svg()), "utf-8"), media_type="image/svg+xml"
     )
 
 
