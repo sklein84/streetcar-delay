@@ -1,0 +1,24 @@
+:host ::ng-deep h1,
+:host ::ng-deep h2,
+:host ::ng-deep a {
+  color: var(--headline-red);
+}
+
+.close-button {
+  position: fixed;
+  left: 89%;
+}
+
+.info-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 10%;
+  top: 10%;
+  width: 80%;
+  height: 80%;
+  overflow: auto;
+  padding: 10px;
+  background-color: var(--background-red);
+  border: 1px solid var(--headline-red);
+}

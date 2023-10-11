@@ -28,3 +28,8 @@ class StreetCarDelayAggregate(BaseModel):
 class AggregateDetails(BaseModel):
     closestStopBefore: str
     topIncidentTypes: List[str]
+
+
+class MetaData(BaseModel):
+    earliestDate: datetime.date
+    latestDate: datetime.date

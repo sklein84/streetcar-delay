@@ -16,3 +16,8 @@ export interface IDelayFilterParameters {
   timeFrom?: number | null;
   timeUntil?: number | null;
 }
+
+export interface IMetadata {
+  earliestDate: Date;
+  latestDate: Date;
+}

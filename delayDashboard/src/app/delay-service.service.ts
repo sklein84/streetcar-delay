@@ -59,7 +59,9 @@ export class DelayService {
       : new HttpParams();
 
     return this.http.get<IAggregateStopDetails>(
-      `${this.delays_endpoint}/${line}/aggregate/${encodeURIComponent(closestStopBefore)}`,
+      `${this.delays_endpoint}/${line}/aggregate/${encodeURIComponent(
+        closestStopBefore
+      )}`,
       { params: params }
     );
   }
