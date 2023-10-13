@@ -12,9 +12,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfoModalComponent } from './info-modal/info-modal.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { LineMapComponent } from './line-map/line-map.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, InfoModalComponent],
+  declarations: [AppComponent, DashboardComponent, InfoModalComponent, LineMapComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

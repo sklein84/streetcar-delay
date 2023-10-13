@@ -8,6 +8,7 @@ select,
 input {
   background-color: var(--background-red);
   border: 1px solid var(--headline-red);
+  margin: 5px;
 }
 
 button {

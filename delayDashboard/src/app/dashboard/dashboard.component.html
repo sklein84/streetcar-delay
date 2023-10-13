@@ -1,6 +1,9 @@
 <div style="display: flex; justify-content: center">
   <h1 style="text-align: center">TTC Streetcar Delay Explorer</h1>
-  <div (click)="showInfoModal()" style="margin-left: 20px; font-size: 16pt; margin-top: 22pt;">
+  <div
+    (click)="showInfoModal()"
+    style="margin-left: 20px; font-size: 16pt; margin-top: 22pt"
+  >
     <ng-icon name="bootstrapInfoCircleFill" color="rgb(210, 0, 0)"></ng-icon>
   </div>
 </div>
@@ -9,16 +12,25 @@
 
 <div style="margin-bottom: 20px; display: flex; justify-content: space-between">
   <div>
-    Line:
-    <select (change)="changeLine($event)">
-      <option *ngFor="let streetcarLine of lines">{{ streetcarLine }}</option>
-    </select>
-    Statistic:
-    <select (change)="changeStat($event)">
-      <option value="Count">Count</option>
-      <option value="Total Minutes">Total Minutes</option>
-      <option value="Minutes / Incident">Minutes / Incident</option>
-    </select>
+    <div style="margin: 5px">
+      Line:
+      <select (change)="changeLine($event)">
+        <option *ngFor="let streetcarLine of lines">{{ streetcarLine }}</option>
+      </select>
+      Statistic:
+      <select (change)="changeStat($event)">
+        <option value="Count">Count</option>
+        <option value="Total Minutes">Total Minutes</option>
+        <option value="Minutes / Incident">Minutes / Incident</option>
+      </select>
+    </div>
+    <div style="margin: 5px">
+      View:
+      <select (change)="changeView($event)">
+        <option value="schematic">Schematic</option>
+        <option value="map">Map</option>
+      </select>
+    </div>
   </div>
   <form [formGroup]="filterForm">
     <div style="margin: 5px">
@@ -27,7 +39,7 @@
         type="date"
         [min]="metadata?.earliestDate"
         [max]="metadata?.latestDate"
-        style="width: 9em; margin: 5px"
+        style="width: 9em"
         formControlName="dateFrom"
       />
       -
@@ -35,15 +47,15 @@
         type="date"
         [min]="metadata?.earliestDate"
         [max]="metadata?.latestDate"
-        style="width: 9em; margin: 5px"
+        style="width: 9em"
         formControlName="dateUntil"
       />
     </div>
     <div style="margin: 5px">
       <label>Time range:</label>
-      <input style="margin: 5px" type="time" formControlName="timeFrom" />
+      <input type="time" formControlName="timeFrom" />
       -
-      <input style="margin: 5px" type="time" formControlName="timeUntil" />
+      <input type="time" formControlName="timeUntil" />
     </div>
     <div style="margin: 5px">
       <button style="margin: 5px" (click)="refreshData()">Apply Filter</button>
@@ -54,8 +66,14 @@
   </form>
 </div>
 
+<line-map
+  [line]="line"
+  (selectedLineEmitter)="selectStop($event?.id?.slice(5))"
+  *ngIf="selectedView === 'map'"
+></line-map>
+
 <div>
-  <div id="vizContainer" width="60%">
+  <div #vizContainer width="60%" *ngIf="selectedView === 'schematic'">
     <div *ngFor="let stop of stops; index as i">
       <div style="display: flex">
         <div class="dot"></div>
@@ -80,11 +98,16 @@
         (click)="selectedStop = null"
       ></ng-icon>
     </div>
-    Top incidents types:
-    <ol>
-      <li *ngFor="let incident of selectedStopData?.topIncidentTypes">
-        {{ incident }}
-      </li>
-    </ol>
+    <div style="font-weight: bold">
+      {{ getStat(selectedStop) }} {{ stat === "Count" ? "Delays" : "Minutes" }}
+    </div>
+    <div>
+      Top incidents types:
+      <ol>
+        <li *ngFor="let incident of selectedStopData?.topIncidentTypes">
+          {{ incident }}
+        </li>
+      </ol>
+    </div>
   </div>
 </div>

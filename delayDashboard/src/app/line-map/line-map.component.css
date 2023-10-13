@@ -1,0 +1,4 @@
+:host ::ng-deep line:hover {
+  stroke: black;
+  stroke-width: 5px;
+}

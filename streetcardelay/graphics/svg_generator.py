@@ -103,7 +103,7 @@ class SVGGenerator:
             )
         ]
 
-        elements = stops + lines
+        elements = lines + stops
 
         if draw_stop_names:
             stop_texts: List[svg.Element] = [
@@ -119,7 +119,8 @@ class SVGGenerator:
             elements += stop_texts
 
         return svg.SVG(
-            width=self.style.canvas_width + self.style.padding,
+            width=max(coord[0] for coord in self._transformed_coordinates)
+            + self.style.padding,
             height=max(coord[1] for coord in self._transformed_coordinates)
             + self.style.padding,
             elements=elements,

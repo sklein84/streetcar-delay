@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -6,11 +6,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LineService {
-  private lines_endpoint = './api/streetcarLines';
+  private linesEndpoint = './api/streetcarLines';
+  private mapsEndpoint = './api/maps';
 
   constructor(private http: HttpClient) {}
 
   getLines(): Observable<string[]> {
-    return this.http.get<string[]>(this.lines_endpoint);
+    return this.http.get<string[]>(this.linesEndpoint);
+  }
+
+  getMap(line: string): Observable<string> {
+    let params = new HttpParams();
+    params = params.set('line', line);
+
+    return this.http.get(this.mapsEndpoint, {
+      params: params,
+      responseType: 'text',
+    });
   }
 }

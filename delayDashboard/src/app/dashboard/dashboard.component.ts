@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StopService } from '../stop-service.service';
 import { DelayService } from '../delay-service.service';
@@ -15,12 +22,16 @@ import { MetadataService } from '../metadata.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
+  @ViewChild('vizContainer') schematicViewContainer:
+    | ElementRef<HTMLElement>
+    | undefined;
   public infoModalVisible = false;
 
   public line: string = '301';
   public stat: string = 'Count';
   public selectedStop: string | null = null;
+  public selectedView: string = 'schematic';
 
   public lines: string[] = [];
   public stops: string[] = [];
@@ -48,11 +59,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
-    let vizContainer = document.getElementById('vizContainer');
-    this.vizWidth = vizContainer
-      ? vizContainer.getBoundingClientRect().width
-      : 0;
     this.metadataService.getMetadata().subscribe((md) => (this.metadata = md));
+  }
+
+  ngAfterViewInit(): void {
+    this.vizWidth = this.getVizWidth();
   }
 
   refreshData(): void {
@@ -69,6 +80,12 @@ export class DashboardComponent implements OnInit {
     this.selectedStop = null;
   }
 
+  getVizWidth(): number {
+    return this.schematicViewContainer
+      ? this.schematicViewContainer.nativeElement.getBoundingClientRect().width
+      : 0;
+  }
+
   changeLine(event: Event): void {
     this.line = (event.target as HTMLInputElement).value;
     this.refreshData();
@@ -79,6 +96,9 @@ export class DashboardComponent implements OnInit {
     this.calculateBarLengths();
   }
 
+  changeView(event: Event): void {
+    this.selectedView = (event.target as HTMLInputElement).value;
+  }
   calculateBarLengths(): void {
     const max_absolute_length = Math.max(
       ...this.delayAggregates.map((aggregate) => {
@@ -150,7 +170,13 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  selectStop(stop: string | null) {
+  selectStop(stop: string | null | undefined) {
+    if (stop === null || stop === undefined) {
+      this.selectedStop = null;
+      this.selectedStopData = null;
+      return;
+    }
+
     this.selectedStop = stop;
     if (stop) {
       this.delayService

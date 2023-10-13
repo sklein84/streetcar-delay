@@ -3,7 +3,7 @@ from typing import List, Union
 
 import numpy as np
 import pandas as pd
-from fastapi import HTTPException, FastAPI, Response
+from fastapi import FastAPI, HTTPException, Response
 
 from streetcardelay import config
 from streetcardelay.api.model import (
@@ -51,7 +51,7 @@ async def streetcar_lines() -> List[str]:
 async def streetcar_stops(line: str) -> List[str]:
     if line not in STREETCAR_STOPS:
         raise HTTPException(400, detail=f"Streetcar line {line} not found")
-    
+
     return STREETCAR_STOPS[line]["stops"]
 
 
@@ -156,7 +156,7 @@ async def stopAggregateDetails(
     )
 
 
-@app.get("/map", response_class=Response)
+@app.get("/maps", response_class=Response)
 async def svg_map(line: str):
     if line not in STREETCAR_STOPS:
         raise HTTPException(400, detail=f"Streetcar line {line} not found")
