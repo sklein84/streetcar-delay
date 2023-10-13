@@ -2,3 +2,8 @@
   stroke: black;
   stroke-width: 5px;
 }
+
+:host ::ng-deep circle:hover {
+  stroke: black;
+  stroke-width: 1px;
+}
