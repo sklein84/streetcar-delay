@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public stops: string[] = [];
   public helpText: string = '';
   public metadata: IMetadata | null = null;
+  public colorMap: Map<string, string> = new Map();
 
   public selectedStopData: IAggregateStopDetails | null = null;
   public delayAggregates: IStreetcarDelayAggregate[] = [];
@@ -76,6 +77,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .subscribe((delayAggs) => {
         this.delayAggregates = delayAggs;
         this.calculateBarLengths();
+        this.colorMap = this.makeColorMap();
       });
     this.selectedStop = null;
   }
@@ -94,6 +96,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   changeStat(event: Event): void {
     this.stat = (event.target as HTMLInputElement).value;
     this.calculateBarLengths();
+    this.colorMap = this.makeColorMap();
   }
 
   changeView(event: Event): void {
@@ -155,6 +158,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
      */
     const lightness = (90 - 50 * ratio).toString(10);
     return `hsl(0,100%,${lightness}%)`;
+  }
+
+  private makeColorMap(): Map<string, string> {
+    return this.stops.reduce(
+      (agg, curr) => {
+        const match = this.barLengths.find((l) => l.closestStopBefore === curr)
+        const relative_width = match ? match.length : 0;
+        agg.set(curr, this.getBarColor(relative_width));
+        return agg
+      }, 
+      new Map<string, string>()
+    )
   }
 
   getBarStyle(stop: string): { [klass: string]: any } {

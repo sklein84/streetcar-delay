@@ -11,8 +11,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { LineService } from '../line-service.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { LineService } from '../line-service.service';
 
 @Component({
   selector: 'line-map',
@@ -21,11 +21,15 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input({ required: true }) line: string = '';
+  @Input() stat: string = '';
   selectedLine: HTMLElement | null = null;
   @Output() selectedLineEmitter = new EventEmitter<HTMLElement | null>();
   hoveringStop: string = '';
+  hoveringStopLeft: string = 'auto';
+  hoveringStopTop: string = 'auto';
   listenerDeleters: (() => void)[] = [];
   svgMap: SafeHtml = '';
+  @Input() colorMap: Map<string, string> = new Map();
 
   constructor(
     private lineService: LineService,
@@ -41,11 +45,18 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['line'].previousValue != changes['line'].currentValue) {
+    if (changes['line']) {
+      this.hoveringStop = '';
       this.lineService.getMap(this.line).subscribe((map) => {
         this.svgMap = this.sanitizer.bypassSecurityTrustHtml(map);
-        setTimeout(() => this.setUpStopListeners(), 100);
+        setTimeout(() => {
+          this.setUpStopListeners();
+          this.styleLines();
+        }, 50);
       });
+    }
+    if (changes['stat']) {
+      this.styleLines();
     }
   }
 
@@ -66,6 +77,14 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
       this.listenerDeleters.push(
         this.renderer.listen(circle, 'mouseenter', () => {
           this.hoveringStop = circle.id.slice(5);
+          const boundingRect = circle.getBoundingClientRect();
+          this.hoveringStopLeft = `${boundingRect.left + 15}px`;
+          this.hoveringStopTop = `${boundingRect.top + 15}px`;
+        })
+      );
+      this.listenerDeleters.push(
+        this.renderer.listen(circle, 'mouseleave', () => {
+          this.hoveringStop = '';
         })
       );
     });
@@ -73,7 +92,8 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
 
   private resetSelectedLineStyle() {
     if (this.selectedLine !== null) {
-      this.selectedLine.style.stroke = 'red';
+      this.selectedLine.style.stroke =
+        this.colorMap.get(this.selectedLine.id.slice(5)) || 'red';
       this.selectedLine.style.strokeWidth = '5px';
     }
   }
@@ -91,8 +111,21 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
 
     this.selectedLine = currentTarget;
     this.selectedLine.style.stroke = 'black';
-    this.selectedLine.style.strokeWidth = '7px';
 
     this.selectedLineEmitter.emit(this.selectedLine);
+  }
+
+  styleLines(colorMap?: Map<string, string>) {
+    let cMap: Map<string, string>;
+    if (!colorMap) {
+      cMap = this.colorMap;
+    } else {
+      cMap = colorMap;
+    }
+
+    const lineElements = this.document.querySelectorAll('line');
+    lineElements.forEach((line) => {
+      line.style.stroke = cMap.get(line.id.slice(5)) || 'red';
+    });
   }
 }

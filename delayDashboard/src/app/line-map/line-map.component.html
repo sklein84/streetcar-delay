@@ -1,2 +1,8 @@
-<div style="font-weight: bold;">{{ hoveringStop }}</div>
+<div
+  class="stopDisplay"
+  [style.left]="hoveringStopLeft"
+  [style.top]="hoveringStopTop"
+>
+  {{ hoveringStop }}
+</div>
 <div [innerHTML]="svgMap" (click)="clickMap($event)"></div>

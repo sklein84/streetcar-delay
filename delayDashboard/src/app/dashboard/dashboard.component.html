@@ -27,7 +27,7 @@
     <div style="margin: 5px">
       View:
       <select (change)="changeView($event)">
-        <option value="schematic">Schematic</option>
+        <option value="schematic">List</option>
         <option value="map">Map</option>
       </select>
     </div>
@@ -68,6 +68,8 @@
 
 <line-map
   [line]="line"
+  [colorMap]="colorMap"
+  [stat]="stat"
   (selectedLineEmitter)="selectStop($event?.id?.slice(5))"
   *ngIf="selectedView === 'map'"
 ></line-map>
