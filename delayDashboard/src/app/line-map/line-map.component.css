@@ -6,5 +6,13 @@
 .stopDisplay {
   font-weight: bold;
   position: fixed;
-  text-align: right;
+}
+
+.mapContainer {
+  border: 1px solid var(--headline-red);
+}
+
+.zoomIcon {
+  color: var(--headline-red);
+  margin: 5px;
 }

@@ -2,6 +2,8 @@ import { NgIconsModule } from '@ng-icons/core';
 import {
   bootstrapXCircleFill,
   bootstrapInfoCircleFill,
+  bootstrapZoomIn,
+  bootstrapZoomOut,
 } from '@ng-icons/bootstrap-icons';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,12 +17,22 @@ import { MarkdownModule } from 'ngx-markdown';
 import { LineMapComponent } from './line-map/line-map.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, InfoModalComponent, LineMapComponent],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    InfoModalComponent,
+    LineMapComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgIconsModule.withIcons({ bootstrapXCircleFill, bootstrapInfoCircleFill }),
+    NgIconsModule.withIcons({
+      bootstrapXCircleFill,
+      bootstrapInfoCircleFill,
+      bootstrapZoomIn,
+      bootstrapZoomOut,
+    }),
     MarkdownModule.forRoot(),
   ],
   providers: [],

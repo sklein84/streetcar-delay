@@ -5,7 +5,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   Output,
   Renderer2,
   SimpleChanges,
@@ -19,17 +18,28 @@ import { LineService } from '../line-service.service';
   templateUrl: './line-map.component.html',
   styleUrls: ['./line-map.component.css'],
 })
-export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
+export class LineMapComponent implements OnChanges, OnDestroy {
   @Input({ required: true }) line: string = '';
   @Input() stat: string = '';
+  @Input() colorMap: Map<string, string> = new Map();
+
+  svgMap: SafeHtml = '';
+
   selectedLine: HTMLElement | null = null;
   @Output() selectedLineEmitter = new EventEmitter<HTMLElement | null>();
+
   hoveringStop: string = '';
   hoveringStopLeft: string = 'auto';
   hoveringStopTop: string = 'auto';
-  listenerDeleters: (() => void)[] = [];
-  svgMap: SafeHtml = '';
-  @Input() colorMap: Map<string, string> = new Map();
+
+  stopListenerDeleters: (() => void)[] = [];
+  panningListenerDeleters: (() => void)[] = [];
+
+  mouseDownData: {
+    position: { x: number; y: number };
+    viewBox: [number, number, number, number];
+  } | null = null;
+  panningViewBox: [number, number, number, number] | null = null;
 
   constructor(
     private lineService: LineService,
@@ -38,12 +48,6 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
-  ngOnInit(): void {
-    this.lineService.getMap(this.line).subscribe((map) => {
-      this.svgMap = this.sanitizer.bypassSecurityTrustHtml(map);
-    });
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['line']) {
       this.hoveringStop = '';
@@ -51,6 +55,7 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
         this.svgMap = this.sanitizer.bypassSecurityTrustHtml(map);
         setTimeout(() => {
           this.setUpStopListeners();
+          this.setUpPanningListeners();
           this.styleLines();
         }, 50);
       });
@@ -61,20 +66,26 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cleanUpListeners();
+    this.cleanUpStopListeners();
+    this.cleanUpPanningListeners();
   }
 
-  private cleanUpListeners(): void {
-    this.listenerDeleters.forEach((f) => f());
-    this.listenerDeleters = [];
+  private cleanUpStopListeners(): void {
+    this.stopListenerDeleters.forEach((f) => f());
+    this.stopListenerDeleters = [];
+  }
+
+  private cleanUpPanningListeners(): void {
+    this.panningListenerDeleters.forEach((f) => f());
+    this.panningListenerDeleters = [];
   }
 
   private setUpStopListeners(): void {
-    this.cleanUpListeners();
+    this.cleanUpStopListeners();
 
     const circleElements = this.document.querySelectorAll('circle');
     circleElements.forEach((circle) => {
-      this.listenerDeleters.push(
+      this.stopListenerDeleters.push(
         this.renderer.listen(circle, 'mouseenter', () => {
           this.hoveringStop = circle.id.slice(5);
           const boundingRect = circle.getBoundingClientRect();
@@ -82,12 +93,58 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
           this.hoveringStopTop = `${boundingRect.top + 15}px`;
         })
       );
-      this.listenerDeleters.push(
+      this.stopListenerDeleters.push(
         this.renderer.listen(circle, 'mouseleave', () => {
           this.hoveringStop = '';
         })
       );
     });
+  }
+
+  private setUpPanningListeners() {
+    this.cleanUpPanningListeners();
+    const svg = this.document.querySelector('svg#lineMap');
+    this.panningListenerDeleters.push(
+      this.renderer.listen(svg, 'pointerdown', (event) => {
+        const viewBoxCoords = svg
+          ?.getAttribute('viewBox')
+          ?.split(' ')
+          .map((x) => Number(x))
+          .slice(0, 4) as [number, number, number, number];
+        this.mouseDownData = {
+          position: { x: event.clientX, y: event.clientY },
+          viewBox: viewBoxCoords || [0, 0, 0, 0],
+        };
+      })
+    );
+    this.panningListenerDeleters.push(
+      this.renderer.listen(svg, 'pointerup', () => {
+        this.mouseDownData = null;
+      })
+    );
+    this.panningListenerDeleters.push(
+      this.renderer.listen(svg, 'pointerleave', () => {
+        this.mouseDownData = null;
+      })
+    );
+    this.panningListenerDeleters.push(
+      this.renderer.listen(svg, 'pointermove', (event) => {
+        if (this.mouseDownData === null) {
+          return;
+        }
+        const deltaX = this.mouseDownData.position.x - event.clientX;
+        const deltaY = this.mouseDownData.position.y - event.clientY;
+
+        svg?.setAttribute(
+          'viewBox',
+          `${this.mouseDownData.viewBox[0] + deltaX} ${
+            this.mouseDownData.viewBox[1] + deltaY
+          } ${this.mouseDownData.viewBox[2] + deltaX} ${
+            this.mouseDownData.viewBox[3] + deltaY
+          }`
+        );
+      })
+    );
   }
 
   private resetSelectedLineStyle() {
@@ -127,5 +184,18 @@ export class LineMapComponent implements OnInit, OnChanges, OnDestroy {
     lineElements.forEach((line) => {
       line.style.stroke = cMap.get(line.id.slice(5)) || 'red';
     });
+  }
+
+  zoom(factor: number): void {
+    let svg = this.document.querySelector('svg#lineMap');
+    const viewBoxCoords = svg
+      ?.getAttribute('viewBox')
+      ?.split(' ')
+      .map((x) => Number(x));
+    if (viewBoxCoords) {
+      viewBoxCoords[2] = viewBoxCoords[2] * factor;
+      viewBoxCoords[3] = viewBoxCoords[3] * factor;
+      svg?.setAttribute('viewBox', viewBoxCoords?.join(' '));
+    }
   }
 }
