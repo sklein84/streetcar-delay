@@ -13,6 +13,7 @@ class SVGStyle(BaseModel):
     stop_radius: int = 7
     stop_color: str = "red"
     padding: int = 12
+    id: str = "lineMap"
 
 
 class SVGGenerator:
@@ -118,10 +119,11 @@ class SVGGenerator:
             ]
             elements += stop_texts
 
+        width = max(coord[0] for coord in self._transformed_coordinates) + self.style.padding
+        height = max(coord[1] for coord in self._transformed_coordinates) + self.style.padding
+
         return svg.SVG(
-            width=max(coord[0] for coord in self._transformed_coordinates)
-            + self.style.padding,
-            height=max(coord[1] for coord in self._transformed_coordinates)
-            + self.style.padding,
+            id=self.style.id,
+            viewBox=svg.ViewBoxSpec(0, 0, width, height),
             elements=elements,
         )
