@@ -60,7 +60,7 @@
     <div style="margin: 5px">
       <button style="margin: 5px" (click)="refreshData()">Apply Filter</button>
       <button style="margin: 5px" (click)="filterForm.reset(); refreshData()">
-        Reset
+        Reset Filter
       </button>
     </div>
   </form>
@@ -95,6 +95,7 @@
         {{ selectedStop }} - {{ stops[stops.indexOf(selectedStop) + 1] }}
       </h3>
       <ng-icon
+        *ngIf="selectedView === 'schematic'"
         name="bootstrapXCircleFill"
         color="rgb(210, 0, 0)"
         (click)="selectedStop = null"

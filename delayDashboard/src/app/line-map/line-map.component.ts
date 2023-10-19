@@ -24,6 +24,7 @@ export class LineMapComponent implements OnChanges, OnDestroy {
   @Input() colorMap: Map<string, string> = new Map();
 
   svgMap: SafeHtml = '';
+  sourceViewBox: string = '';
 
   selectedLine: HTMLElement | null = null;
   @Output() selectedLineEmitter = new EventEmitter<HTMLElement | null>();
@@ -54,6 +55,10 @@ export class LineMapComponent implements OnChanges, OnDestroy {
       this.lineService.getMap(this.line).subscribe((map) => {
         this.svgMap = this.sanitizer.bypassSecurityTrustHtml(map);
         setTimeout(() => {
+          this.sourceViewBox =
+            this.document
+              .querySelector('svg#lineMap')
+              ?.getAttribute('viewBox') || '';
           this.setUpStopListeners();
           this.setUpPanningListeners();
           this.styleLines();
@@ -187,7 +192,7 @@ export class LineMapComponent implements OnChanges, OnDestroy {
   }
 
   zoom(factor: number): void {
-    let svg = this.document.querySelector('svg#lineMap');
+    const svg = this.document.querySelector('svg#lineMap');
     const viewBoxCoords = svg
       ?.getAttribute('viewBox')
       ?.split(' ')
@@ -198,5 +203,10 @@ export class LineMapComponent implements OnChanges, OnDestroy {
         viewBoxCoords?.map((x) => x * factor).join(' ')
       );
     }
+  }
+
+  resetZoom(): void {
+    const svg = this.document.querySelector('svg#lineMap');
+    svg?.setAttribute('viewBox', this.sourceViewBox);
   }
 }

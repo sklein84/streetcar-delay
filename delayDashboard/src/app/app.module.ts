@@ -1,5 +1,6 @@
 import { NgIconsModule } from '@ng-icons/core';
 import {
+  bootstrapArrowCounterclockwise,
   bootstrapXCircleFill,
   bootstrapInfoCircleFill,
   bootstrapZoomIn,
@@ -28,6 +29,7 @@ import { LineMapComponent } from './line-map/line-map.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgIconsModule.withIcons({
+      bootstrapArrowCounterclockwise,
       bootstrapXCircleFill,
       bootstrapInfoCircleFill,
       bootstrapZoomIn,
