@@ -8,11 +8,15 @@
   position: fixed;
 }
 
+.zoomIcon {
+  color: var(--headline-red);
+  margin: 5px;
+}
+
 .mapContainer {
   border: 1px solid var(--headline-red);
 }
 
-.zoomIcon {
-  color: var(--headline-red);
-  margin: 5px;
+svg#lineMap {
+  height: 800px;
 }

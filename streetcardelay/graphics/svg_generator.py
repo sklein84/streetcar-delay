@@ -8,9 +8,9 @@ from streetcardelay.processing.spatial import mercator_project
 
 class SVGStyle(BaseModel):
     canvas_width: float = 1200
-    line_width: int = 5
+    line_width: Any = svg.Length(0.4, '%')
     line_color: str = "red"
-    stop_radius: int = 7
+    stop_radius: Any = svg.Length(0.6, '%')
     stop_color: str = "red"
     padding: int = 12
     id: str = "lineMap"

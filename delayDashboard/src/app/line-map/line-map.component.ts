@@ -151,7 +151,7 @@ export class LineMapComponent implements OnChanges, OnDestroy {
     if (this.selectedLine !== null) {
       this.selectedLine.style.stroke =
         this.colorMap.get(this.selectedLine.id.slice(5)) || 'red';
-      this.selectedLine.style.strokeWidth = '5px';
+      this.selectedLine.style.strokeWidth = '0.4%';
     }
   }
 
@@ -193,9 +193,10 @@ export class LineMapComponent implements OnChanges, OnDestroy {
       ?.split(' ')
       .map((x) => Number(x));
     if (viewBoxCoords) {
-      viewBoxCoords[2] = viewBoxCoords[2] * factor;
-      viewBoxCoords[3] = viewBoxCoords[3] * factor;
-      svg?.setAttribute('viewBox', viewBoxCoords?.join(' '));
+      svg?.setAttribute(
+        'viewBox',
+        viewBoxCoords?.map((x) => x * factor).join(' ')
+      );
     }
   }
 }
