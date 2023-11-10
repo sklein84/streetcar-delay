@@ -5,6 +5,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class StreetCarDelay(BaseModel):
+    """Model for a single delay incident"""
+
     model_config = ConfigDict(populate_by_name=True)
 
     date: datetime.date = Field(alias="Date")
@@ -17,6 +19,8 @@ class StreetCarDelay(BaseModel):
 
 
 class StreetCarDelayAggregate(BaseModel):
+    """Model for aggregated delay incident statistics between two stops"""
+
     model_config = ConfigDict(populate_by_name=True)
 
     closestStopBefore: Union[str, None] = Field(alias="closest_stop_before")
@@ -26,10 +30,14 @@ class StreetCarDelayAggregate(BaseModel):
 
 
 class AggregateDetails(BaseModel):
+    """Model for more detailed aggregate information for delay incidents between two stops"""
+
     closestStopBefore: str
     topIncidentTypes: List[str]
 
 
 class MetaData(BaseModel):
+    """Model for delay metadata"""
+
     earliestDate: datetime.date
     latestDate: datetime.date

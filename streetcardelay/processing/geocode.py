@@ -10,8 +10,7 @@ from streetcardelay.config import GEOCODE_URL, GOOGLE_MAPS_API_KEY, TORONTO_BOUN
 def geocode_location_gmaps(
     location_description: str, bounding_box=TORONTO_BOUNDING_BOX
 ) -> Tuple[float, float]:
-    """
-    Turn a location description into a lattitude-longitude coordinate pair using the
+    """Turn a location description into a lattitude-longitude coordinate pair using the
     Google Maps geocoding API
     """
 
@@ -39,8 +38,7 @@ def geocode_all_locations(
     query_batch_size: int = 1000,
     cooldown_period: int = 30,
 ) -> Dict[str, Tuple[float, float]]:
-    """
-    Turn an iterable of location descriptions into a dictionary of descriptions to
+    """Turn an iterable of location descriptions into a dictionary of descriptions to
     lattitude-longitude coordinates. Uses a thread pool to query the Google Maps geocoding API and
     tries to avoid hitting rate limits.
     """
@@ -59,8 +57,7 @@ def geocode_all_locations(
                 for description in chunk
             ]
             chunk_results = {
-                description: future.result()
-                for description, future in zip(chunk, futures)
+                description: future.result() for description, future in zip(chunk, futures)
             }
         all_results.update(chunk_results)
 

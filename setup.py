@@ -1,8 +1,9 @@
 from setuptools import find_packages, setup
+from .streetcardelay.api import __version__ as version
 
 setup(
     name="streetcardelay",
-    version="0.1.0",
+    version=version,
     packages=find_packages(include=["streetcardelay", "streetcardelay.*"]),
     install_requires=["fastapi", "pandas", "requests", "uvicorn"],
     tests_require=["pytest"],

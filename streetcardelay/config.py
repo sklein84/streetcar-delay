@@ -1,3 +1,5 @@
+"""Module for storing application configuration and obtaining it from environment """
+
 import os
 from pathlib import Path
 
@@ -6,9 +8,7 @@ GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 
 TORONTO_BOUNDING_BOX = "43.5810245,-79.639219|43.8554579,-79.1168971"
 
-DELAY_DATA_FILE = Path(
-    os.environ.get("DELAY_DATA_FILE", "data/delays/source_delay_data.csv")
-)
+DELAY_DATA_FILE = Path(os.environ.get("DELAY_DATA_FILE", "data/delays/source_delay_data.csv"))
 DELAY_COORDINATES_FILE = Path(
     os.environ.get("DELAY_COORDINATES_FILE", "data/delays/geocoded_delay_locations.csv")
 )
