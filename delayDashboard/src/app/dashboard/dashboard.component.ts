@@ -67,6 +67,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.vizWidth = this.getVizWidth();
   }
 
+  /**
+   * Fetches and processes all data from the backend needed for rendereing the dashboard
+   */
   refreshData(): void {
     this.lineService.getLines().subscribe((lines) => (this.lines = lines));
     this.stopService
@@ -82,26 +85,46 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.selectedStop = null;
   }
 
+  /**
+   * Obtain desired width of visualisation container
+   * @returns width in pixels
+   */
   getVizWidth(): number {
     return this.schematicViewContainer
       ? this.schematicViewContainer.nativeElement.getBoundingClientRect().width
       : 0;
   }
 
+  /**
+   * Triggers when the streetcar line is changed in the visualization and refreshes data
+   * @param event
+   */
   changeLine(event: Event): void {
     this.line = (event.target as HTMLInputElement).value;
     this.refreshData();
   }
 
+  /**
+   * Triggers when the displayed statistics is changed in the dashboard and recalculates
+   * visualization
+   * @param event
+   */
   changeStat(event: Event): void {
     this.stat = (event.target as HTMLInputElement).value;
     this.calculateBarLengths();
     this.colorMap = this.makeColorMap();
   }
-
+  /**
+   * Triggers when view is changed between summay and map view
+   * @param event
+   */
   changeView(event: Event): void {
     this.selectedView = (event.target as HTMLInputElement).value;
   }
+
+  /**
+   * Calculate lengths of viz bars summary view
+   */
   calculateBarLengths(): void {
     const max_absolute_length = Math.max(
       ...this.delayAggregates.map((aggregate) => {
@@ -136,6 +159,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Extract chosen statistic from list of delay aggregate information, for delay incidents
+   * occuring between the specified stop and its successor
+   * @param stop specifies the stop for which the stat is to be retrieved
+   * @returns
+   */
   getStat(stop: string): number {
     const match = this.delayAggregates.find(
       (l) => l.closestStopBefore === stop
@@ -152,26 +181,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Make hsl color descriptor for given percentage; see https://stackoverflow.com/a/17268489 for
+   * source of inspiration
+   * @param ratio percentage between 0 and 1
+   * @returns hsl color descriptor
+   */
   private getBarColor(ratio: number): string {
-    /**
-     * See https://stackoverflow.com/a/17268489 for source of inspiration
-     */
     const lightness = (90 - 50 * ratio).toString(10);
     return `hsl(0,100%,${lightness}%)`;
   }
 
+  /**
+   * Packages up color information for viz bars
+   * @returns map stop -> color
+   */
   private makeColorMap(): Map<string, string> {
-    return this.stops.reduce(
-      (agg, curr) => {
-        const match = this.barLengths.find((l) => l.closestStopBefore === curr)
-        const relative_width = match ? match.length : 0;
-        agg.set(curr, this.getBarColor(relative_width));
-        return agg
-      }, 
-      new Map<string, string>()
-    )
+    return this.stops.reduce((agg, curr) => {
+      const match = this.barLengths.find((l) => l.closestStopBefore === curr);
+      const relative_width = match ? match.length : 0;
+      agg.set(curr, this.getBarColor(relative_width));
+      return agg;
+    }, new Map<string, string>());
   }
 
+  /**
+   * Make CSS style for viz bars for specified stop
+   * @param stop stop name
+   * @returns object representing the CSS style
+   */
   getBarStyle(stop: string): { [klass: string]: any } {
     const match = this.barLengths.find((l) => l.closestStopBefore === stop);
     const relative_width = match ? match.length : 0;
@@ -185,6 +223,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     };
   }
 
+  /**
+   * Select stop event handler
+   * @param stop
+   * @returns
+   */
   selectStop(stop: string | null | undefined) {
     if (stop === null || stop === undefined) {
       this.selectedStop = null;

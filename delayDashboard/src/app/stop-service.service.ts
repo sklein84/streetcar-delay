@@ -10,6 +10,11 @@ export class StopService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   *
+   * @param line Obtains from backend a list of stops for the specified streetcar line
+   * @returns Observable of array of stop names
+   */
   getStops(line: string): Observable<string[]> {
     const params = new HttpParams().set('line', line);
     return this.http.get<string[]>(this.stops_endpoint, { params: params });

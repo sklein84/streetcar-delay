@@ -10,6 +10,10 @@ export class HelpService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Obtains from backend an information text about the application in markdown format
+   * @returns Observable of application info as string
+   */
   getHelp(): Observable<string> {
     return this.http.get<string>(this.helpEndpoint);
   }

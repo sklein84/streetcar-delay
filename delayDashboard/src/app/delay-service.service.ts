@@ -15,6 +15,11 @@ export class DelayService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Takes filter parameters and uses the to construct corresponding HttpParams
+   * @param filterParameters filter parameters object
+   * @returns HttpParams object
+   */
   private getFilterParams(
     filterParameters: IDelayFilterParameters
   ): HttpParams {
@@ -35,6 +40,13 @@ export class DelayService {
     return params;
   }
 
+  /**
+   * Get aggregate delay statistics for a specified streetcar line and filter parameters from the
+   * backend
+   * @param line streetcar line for which the statistics are to be obtained
+   * @param filterParameters filters that should be applied before aggregating
+   * @returns array of aggregate delay stats
+   */
   getDelayAggregate(
     line: string,
     filterParameters?: IDelayFilterParameters
@@ -49,6 +61,14 @@ export class DelayService {
     );
   }
 
+  /**
+   * Obtains from the backend aggregate details for delay incidents of a specified streetcar line
+   * between a specified stop and its successor, applying possible filter criteria
+   * @param line streetcar line
+   * @param closestStopBefore streetcar stop before the corresponding delay incidents
+   * @param filterParameters  filters that should be applied before aggregating
+   * @returns Observable of detail information object
+   */
   getDelayAggregateDetails(
     line: string,
     closestStopBefore: string,
