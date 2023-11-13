@@ -15,8 +15,6 @@ from streetcardelay.api.model import (
 from streetcardelay.graphics.svg_generator import SVGGenerator
 from streetcardelay.processing import DataKraken
 
-__version__ = "1.0.0"
-
 
 def prepare_data() -> Tuple[Dict[str, Any], pd.DataFrame]:
     """Read streetcar stop and delay data data from disk and preprocess"""
