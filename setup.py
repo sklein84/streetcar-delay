@@ -1,5 +1,5 @@
 from setuptools import find_packages, setup
-from .streetcardelay.api import __version__ as version
+from streetcardelay.api import __version__ as version
 
 setup(
     name="streetcardelay",
