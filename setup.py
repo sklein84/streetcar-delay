@@ -5,6 +5,6 @@ setup(
     name="streetcardelay",
     version=version,
     packages=find_packages(include=["streetcardelay", "streetcardelay.*"]),
-    install_requires=["fastapi", "pandas", "requests", "uvicorn"],
+    install_requires=["fastapi", "pandas", "pydantic", "requests", "svg.py", "uvicorn"],
     tests_require=["pytest"],
 )
