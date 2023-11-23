@@ -61,7 +61,7 @@ class DataKraken:
                 set(self.expected_source_columns) - set(self.delay_data.columns),
             )
 
-        self.delay_data.astype(dtype=self.expected_source_columns, copy=False)
+        self.delay_data = self.delay_data.astype(dtype=self.expected_source_columns)
         self.delay_data["Date"] = pd.to_datetime(self.delay_data["Date"])
         self.delay_data["Time"] = self.delay_data["Time"].map(datetime.time.fromisoformat)
 

@@ -1,0 +1,100 @@
+|Date|Line|Time|Day|Location|Incident|Min Delay|Min Gap|Bound|Vehicle
+0|2014-01-02|505|06:31:00|Thursday|Dundas and Roncesvalles|Late Leaving Garage|4.0|8.0|E/B|4018.0
+1|2014-01-02|504|12:43:00|Thursday|King and Shaw|Utilized Off Route|20.0|22.0|E/B|4128.0
+2|2014-01-02|501|14:01:00|Thursday|Kingston road and Bingham|Held By|13.0|19.0|W/B|4016.0
+3|2014-01-02|504|14:22:00|Thursday|King St. and Roncesvalles Ave.|Investigation|7.0|11.0|W/B|4175.0
+4|2014-01-02|504|16:42:00|Thursday|King and Bathurst|Utilized Off Route|3.0|6.0|E/B|4080.0
+5|2014-01-02|501|17:39:00|Thursday|Queen and Beaconsfeild|Held By|7.0|13.0|W/B|4202.0
+6|2014-01-02|504|18:38:00|Thursday|Roncesvalles and King Street West|Utilized Off Route|4.0|7.0|E/B|4100.0
+7|2014-01-02|510|19:27:00|Thursday|Spadina and St. Andrews|Investigation|20.0|22.0|S/B|4123.0
+8|2014-01-03|504|01:00:00|Friday|Broadview and Queen|Utilized Off Route|7.0|14.0|W/B|4079.0
+9|2014-01-03|512|05:09:00|Friday|Bathurst and St. Clair|Mechanical|3.0|6.0|E/B|4160.0
+10|2014-01-03|501|05:19:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|4037.0
+11|2014-01-03|511|05:22:00|Friday|King at Bathurst|Mechanical|5.0|11.0|S/B|4168.0
+12|2014-01-03|501|05:25:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|4036.0
+13|2014-01-03|501|05:29:00|Friday|Roncesvalles and Queen|Mechanical|4.0|11.0|W/B|
+14|2014-01-03|512|05:33:00|Friday|Bathurst at St. Clair|Mechanical|3.0|6.0|E/B|4082.0
+15|2014-01-03|512|05:39:00|Friday|Bathurst at St Clair|Mechanical|3.0|6.0|E/B|4127.0
+16|2014-01-03|501|05:40:00|Friday|Roncesvalles and Queen|Mechanical|1.0|7.0|W/B|
+17|2014-01-03|506|05:47:00|Friday|Roncevalles and Howard Park|Mechanical|5.0|11.0|E/B|
+18|2014-01-03|512|05:47:00|Friday|Bathurst and St Clair|Mechanical|3.0|6.0|E/B|4166.0
+19|2014-01-03|506|05:48:00|Friday|Roncesvalles and Howard Park|Mechanical|5.0|11.0|E/B|
+20|2014-01-03|511|05:54:00|Friday|King and Bathurst|Mechanical|6.0|11.0|N/B|
+21|2014-01-03|511|05:59:00|Friday|King at Bathurst|Mechanical|5.0|11.0|N/B|
+22|2014-01-03|512|06:03:00|Friday|Bathurst and St. Clair|Mechanical|3.0|5.0|E/B|
+23|2014-01-03|511|06:06:00|Friday|King at Bathurst|Mechanical|5.0|11.0|N/B|4152.0
+24|2014-01-03|511|06:13:00|Friday|King at Bathurst|Mechanical|5.0|11.0|N/B|4000.0
+25|2014-01-03|511|06:15:00|Friday|King at Bathurst|Mechanical|5.0|11.0|N/B|4040.0
+26|2014-01-03|506|06:20:00|Friday|Roncesvalles and Howard Park|Mechanical|5.0|11.0|E/B|4147.0
+27|2014-01-03|501|06:22:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+28|2014-01-03|505|06:23:00|Friday|Dundas West Station|Mechanical|6.0|12.0|E/B|
+29|2014-01-03|506|06:25:00|Friday|Roncesvalles and Howard Park|Mechanical|5.0|11.0|E/B|4178.0
+30|2014-01-03|511|06:25:00|Friday|King at Bathurst|Mechanical|5.0|11.0|N/B|4073.0
+31|2014-01-03|501|06:27:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+32|2014-01-03|504|06:30:00|Friday|Roncesvalles and Queen|Mechanical|4.0|8.0|W/B|
+33|2014-01-03|501|06:32:00|Friday|Queen St. E. and Rainsford|Mechanical|6.0|12.0|W/B|4251.0
+34|2014-01-03|506|06:33:00|Friday|Roncesvalles and Howard Park|Mechanical|6.0|11.0|E/B|4164.0
+35|2014-01-03|504|06:33:00|Friday|Roncesvalles and Queen|Mechanical|4.0|12.0|W/B|
+36|2014-01-03|506|06:49:00|Friday|Roncesvalles and Howard Park|Mechanical|6.0|11.0|E/B|
+37|2014-01-03|501|06:49:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+38|2014-01-03|508|06:51:00|Friday|Roncesvalles and Queen|Mechanical|13.0|0.0|W/B|
+39|2014-01-03|503|06:52:00|Friday|Kingston Road and Beech|Mechanical|20.0|32.0|W/B|4137.0
+40|2014-01-03|502|06:52:00|Friday|Kingston Road and Beech|Mechanical|20.0|32.0|W/B|4004.0
+41|2014-01-03|506|06:57:00|Friday|Roncesvalles and Howard Park|Mechanical|4.0|8.0|E/B|
+42|2014-01-03|508|07:04:00|Friday|Queen and Roncesvalles|Mechanical|12.0|36.0|W/B|
+43|2014-01-03|504|07:07:00|Friday|Queen and roncesvalles|Mechanical|2.0|4.0|W/B|
+44|2014-01-03|504|07:09:00|Friday|Roncesvalles and Howard Park|Mechanical|5.0|11.0|E/B|
+45|2014-01-03|504|07:11:00|Friday|Queen and Roncesvalles|Mechanical|2.0|4.0|W/B|
+46|2014-01-03|504|07:15:00|Friday|Queen and Roncesvalles|Mechanical|2.0|4.0|W/B|
+47|2014-01-03|508|07:16:00|Friday|Queen and Roncesvalles|Mechanical|12.0|36.0|W/B|
+48|2014-01-03|501|07:18:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+49|2014-01-03|504|07:19:00|Friday|Queen and Roncesvalles|Mechanical|2.0|4.0|W/B|
+50|2014-01-03|501|07:28:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+51|2014-01-03|504|07:31:00|Friday|Queen and Roncesvalles|Mechanical|2.0|3.0|W/B|
+52|2014-01-03|501|07:39:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+53|2014-01-03|504|07:47:00|Friday|Queen and Roncesvalles|Mechanical|2.0|4.0|W/B|
+54|2014-01-03|501|07:49:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+55|2014-01-03|504|07:51:00|Friday|Queen and Roncesvalles|Mechanical|2.0|4.0|W/B|
+56|2014-01-03|504|07:55:00|Friday|Queen and Roncesvalles|Mechanical|2.0|4.0|W/B|
+57|2014-01-03|501|08:00:00|Friday|Queen and Roncesvalles|Mechanical|5.0|11.0|W/B|
+58|2014-01-03|501|08:00:00|Friday|Neville Loop|Mechanical|6.0|11.0|E/B|4201.0
+59|2014-01-03|506|08:11:00|Friday|College and McCaul|Mechanical|4.0|8.0|W/B|4026.0
+60|2014-01-03|512|08:12:00|Friday|St. Clair West Stn|Mechanical|2.0|5.0|E/B|4080.0
+61|2014-01-03|511|08:15:00|Friday|CNE Loop|Mechanical|8.0|12.0|N/B|4098.0
+62|2014-01-03|501|08:38:00|Friday|Humber Loop|Mechanical|5.0|11.0|E/B|4202.0
+63|2014-01-03|502|08:56:00|Friday|Queen and Connaught|Mechanical|12.0|24.0|W/B|4041.0
+64|2014-01-03|512|08:57:00|Friday|St. Clair and Spadina|Mechanical|3.0|5.0|E/B|4188.0
+65|2014-01-03|506|12:14:00|Friday|Gerard at Highfield|Investigation|0.0|0.0|W/B|4125.0
+66|2014-01-03|501|13:00:00|Friday|Roncesvalles and Queen|Mechanical|3.0|6.0|W/B|
+67|2014-01-03|501|13:50:00|Friday|Roncesvalles and Queen|Mechanical|3.0|6.0|W/B|
+68|2014-01-03|504|13:58:00|Friday|Roncesvalles and Queen|Mechanical|2.0|6.0|W/B|
+69|2014-01-03|504|14:01:00|Friday|Roncesvalles and Queen|Mechanical|2.0|4.0|W/B|
+70|2014-01-03|512|14:02:00|Friday|Bathurst and St Clair|Mechanical|2.0|5.0|E/B|
+71|2014-01-03|504|14:13:00|Friday|Roncesvalles and Queen|Mechanical|2.0|4.0|W/B|
+72|2014-01-03|512|14:16:00|Friday|Roncesvalles and Queen|Mechanical|3.0|6.0|W/B|
+73|2014-01-03|512|14:17:00|Friday|Bathurst and St Clair|Mechanical|2.0|5.0|E/B|
+74|2014-01-03|511|14:31:00|Friday|Bathurst and King|Mechanical|4.0|8.0|N/B|
+75|2014-01-03|512|14:32:00|Friday|Bathurst and St Clair|Mechanical|2.0|5.0|E/B|
+76|2014-01-03|505|14:33:00|Friday|Roncesvalles and Queen|Mechanical|3.0|6.0|W/B|
+77|2014-01-03|501|14:39:00|Friday|Roncesvalles and Queen|Mechanical|3.0|6.0|W/B|
+78|2014-01-03|504|14:43:00|Friday|Roncesvalles and Queen|Mechanical|2.0|4.0|W/B|
+79|2014-01-03|512|14:46:00|Friday|Bathurst and St Clair|Mechanical|2.0|5.0|E/B|
+80|2014-01-03|504|14:51:00|Friday|Roncesvalles and Queen|Mechanical|2.0|4.0|W/B|
+81|2014-01-03|504|14:56:00|Friday|Roncesvalles and Queen|Mechanical|3.0|5.0|W/B|
+82|2014-01-03|504|15:14:00|Friday|Roncesvalles and Queen|Mechanical|3.0|5.0|W/B|
+83|2014-01-03|504|15:26:00|Friday|Roncesvalles and Queen|Mechanical|2.0|4.0|W/B|
+84|2014-01-03|504|15:34:00|Friday|Roncesvalles and Queen|Mechanical|2.0|3.0|W/B|
+85|2014-01-03|501|15:41:00|Friday|Roncesvalles and Queen|Mechanical|3.0|6.0|W/B|
+86|2014-01-03|508|15:48:00|Friday|Roncesvalles and Queen|Mechanical|15.0|0.0|E/B|
+87|2014-01-03|501|15:50:00|Friday|Queen and Lockwood|Investigation|7.0|14.0|E/B|4118.0
+88|2014-01-03|508|16:03:00|Friday|Roncesvalles and Queen|Mechanical|15.0|30.0|E/B|
+89|2014-01-03|508|16:18:00|Friday|Roncesvalles and Queen|Mechanical|15.0|45.0|E/B|
+90|2014-01-03|508|16:33:00|Friday|Roncesvalles and Queen|Mechanical|15.0|60.0|E/B|
+91|2014-01-03|508|16:48:00|Friday|Roncesvalles and Queen|Mechanical|15.0|75.0|E/B|
+92|2014-01-03|508|17:03:00|Friday|Roncesvalles and Queen|Mechanical|15.0|90.0|E/B|
+93|2014-01-03|505|18:00:00|Friday|Broadview Station|Mechanical|6.0|12.0|W/B|4200.0
+94|2014-01-07|512|04:35:00|Tuesday|St. Clair and Bathurst|Mechanical|10.0|0.0|E/B|4141.0
+95|2014-01-07|501|04:48:00|Tuesday|Queen and Roncevalles|Mechanical|5.0|11.0|W/B|4216.0
+96|2014-01-07|511|04:55:00|Tuesday|Bathurst and King|Held By|0.0|10.0|N/B|4136.0
+97|2014-01-07|504|04:56:00|Tuesday|Queen and Roncesvlles|Mechanical|8.0|18.0|W/B|4147.0
+98|2014-01-07|502|05:09:00|Tuesday|Queen and Connaught|Mechanical|12.0|0.0|E/B|4012.0

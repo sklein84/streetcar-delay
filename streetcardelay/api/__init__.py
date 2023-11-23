@@ -133,7 +133,7 @@ async def streetcar_delay_aggregate(
     "/streetcarDelays/{line}/aggregate/{closestStopBefore:path}",
     response_model_by_alias=False,
 )
-async def stopAggregateDetails(
+async def stop_aggregate_details(
     line: str,
     closestStopBefore: str,
     dateFrom: Union[datetime.date, None] = None,
