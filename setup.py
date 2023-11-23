@@ -5,5 +5,5 @@ setup(
     version="0.1.0",
     packages=find_packages(include=["streetcardelay", "streetcardelay.*"]),
     install_requires=["fastapi", "pandas", "pydantic", "requests", "svg.py", "uvicorn"],
-    tests_require=["pytest"],
+    tests_require=["pytest", "httpx"],
 )
